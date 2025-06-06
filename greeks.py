@@ -1,4 +1,5 @@
 from black_scholes import d1_d2
+from scipy.stats import norm
 
 def delta(S, K, T, r, sigma, option_type='call'):
     d1, _ = d1_d2(S, K, T, r, sigma)
