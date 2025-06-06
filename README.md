@@ -63,7 +63,7 @@ streamlit run app.py
 ## 📂 Project Structure
 ```bash
 black-scholes-option-explorer/
-├── app.py
+├── streamlit_app.py
 ├── black_scholes.py
 ├── greeks.py
 ├── utils.py
