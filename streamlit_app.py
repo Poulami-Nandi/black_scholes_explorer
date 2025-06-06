@@ -1,6 +1,7 @@
 import streamlit as st
 import matplotlib.pyplot as plt
 import numpy as np
+import yfinance as yf
 from black_scholes import black_scholes_price, implied_volatility
 from greeks import delta, gamma, vega, theta, rho
 from utils import payoff_diagram
@@ -48,7 +49,20 @@ with st.sidebar:
 
 st.title("📈 Black-Scholes Option Explorer")
 
-S = st.sidebar.number_input("Spot Price (S)", value=100.0)
+ticker = st.sidebar.text_input("Enter Stock Ticker (optional)", value="AAPL")
+if ticker:
+    try:
+        stock_data = yf.Ticker(ticker)
+        hist = stock_data.history(period="1mo")
+        current_price = hist['Close'][-1]
+        st.sidebar.write(f"Latest price for {ticker.upper()}: ${current_price:.2f}")
+    except Exception as e:
+        st.sidebar.error("Failed to fetch stock price")
+        current_price = 100.0
+else:
+    current_price = 100.0
+
+S = st.sidebar.number_input("Spot Price (S)", value=float(current_price))
 K = st.sidebar.number_input("Strike Price (K)", value=100.0)
 T = st.sidebar.number_input("Time to Maturity (T in years)", value=1.0)
 r = st.sidebar.number_input("Risk-Free Rate (r)", value=0.05)
@@ -77,10 +91,27 @@ st.write({
 st.subheader("Payoff Diagram at Expiry")
 S_range = np.linspace(0.5*S, 1.5*S, 100)
 payoffs = payoff_diagram(S_range, K, option_type, position)
-fig, ax = plt.subplots()
-ax.plot(S_range, payoffs)
-ax.set_title(f"{position.capitalize()} {option_type.capitalize()} Payoff")
-ax.set_xlabel("Stock Price at Expiry")
-ax.set_ylabel("Profit / Loss")
-ax.axhline(0, color='black', linestyle='--')
-st.pyplot(fig)
+fig1, ax1 = plt.subplots()
+ax1.plot(S_range, payoffs)
+ax1.set_title(f"{position.capitalize()} {option_type.capitalize()} Payoff")
+ax1.set_xlabel("Stock Price at Expiry")
+ax1.set_ylabel("Profit / Loss")
+ax1.axhline(0, color='black', linestyle='--')
+st.pyplot(fig1)
+
+# Greeks vs Stock Price
+st.subheader("Greek Sensitivities vs Stock Price")
+S_vals = np.linspace(0.5*S, 1.5*S, 100)
+deltas = [delta(s, K, T, r, sigma, option_type) for s in S_vals]
+gammas = [gamma(s, K, T, r, sigma) for s in S_vals]
+vegas = [vega(s, K, T, r, sigma) for s in S_vals]
+
+fig2, ax2 = plt.subplots()
+ax2.plot(S_vals, deltas, label='Delta')
+ax2.plot(S_vals, gammas, label='Gamma')
+ax2.plot(S_vals, vegas, label='Vega')
+ax2.set_title("Greeks vs Spot Price")
+ax2.set_xlabel("Spot Price")
+ax2.set_ylabel("Sensitivity")
+ax2.legend()
+st.pyplot(fig2)
