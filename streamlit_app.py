@@ -7,42 +7,27 @@ from greeks import delta, gamma, vega, theta, rho
 from utils import payoff_diagram
 
 st.set_page_config(page_title="Black-Scholes Option Explorer", layout="wide")
-st.markdown(
-    "A live dashboard to explore Black-Scholes Option."
-)
 
-# Create two columns
-col1, col2 = st.columns([3, 1])  # Left wider for text, right for image
+st.markdown("A live dashboard to explore Black-Scholes Option.")
 
-# 🧾 Left side: Bio and Links
+# Header with bio and image
+col1, col2 = st.columns([3, 1])
 with col1:
-    st.markdown("**👤 Created by:** Dr. Poulami Nandi  \n"
-                "Physicist · Quant Researcher · Data Scientist")
-
-    st.markdown("**🏛️ Affiliations:**  \n"
-                "[University of Pennsylvania](https://live-sas-physics.pantheon.sas.upenn.edu/people/poulami-nandi) · "
+    st.markdown("**👤 Created by:** Dr. Poulami Nandi  ")
+    st.markdown("Physicist · Quant Researcher · Data Scientist")
+    st.markdown("**🏛️ Affiliations:**  ")
+    st.markdown("[University of Pennsylvania](https://live-sas-physics.pantheon.sas.upenn.edu/people/poulami-nandi) · "
                 "[IIT Kanpur](https://www.iitk.ac.in/) · "
                 "[IIT Gandhinagar](https://www.usief.org.in/home-institution-india/indian-institute-of-technology-gandhinagar/) · "
                 "[UC Davis](https://www.ucdavis.edu/) · "
                 "[TU Wien](http://www.itp.tuwien.ac.at/CPT/index.htm?date=201838&cats=xbrbknmztwd)")
-
-    st.markdown("**📧 Email:**  \n"
-                "[nandi.poulami91@gmail.com](mailto:nandi.poulami91@gmail.com), "
-                "[pnandi@sas.upenn.edu](mailto:pnandi@sas.upenn.edu)")
-
-    st.markdown("**🔗 Links:**  \n"
-                "[LinkedIn](https://www.linkedin.com/in/poulami-nandi-a8a12917b/)  |  "
+    st.markdown("**📧 Email:** [nandi.poulami91@gmail.com](mailto:nandi.poulami91@gmail.com), [pnandi@sas.upenn.edu](mailto:pnandi@sas.upenn.edu)")
+    st.markdown("**🔗 Links:**  ")
+    st.markdown("[LinkedIn](https://www.linkedin.com/in/poulami-nandi-a8a12917b/)  |  "
                 "[GitHub](https://github.com/Poulami-Nandi)  |  "
                 "[Google Scholar](https://scholar.google.co.in/citations?user=bOYJeAYAAAAJ&hl=en)")
-
-# Right side: Image
 with col2:
-    st.image(
-        "https://github.com/Poulami-Nandi/IV_surface_analyzer/raw/main/images/own/own_image.jpg",
-        caption="Dr. Poulami Nandi",
-        use_container_width=True
-    )
-
+    st.image("https://github.com/Poulami-Nandi/IV_surface_analyzer/raw/main/images/own/own_image.jpg", caption="Dr. Poulami Nandi", use_container_width=True)
 
 with st.sidebar:
     st.markdown("Configure your option parameters below")
@@ -100,7 +85,7 @@ ax1.axhline(0, color='black', linestyle='--')
 st.pyplot(fig1)
 
 # Greeks vs Stock Price
-st.subheader("Greek Sensitivities vs Stock Price")
+st.subheader("Greek Sensitivities vs Spot Price")
 S_vals = np.linspace(0.5*S, 1.5*S, 100)
 deltas = [delta(s, K, T, r, sigma, option_type) for s in S_vals]
 gammas = [gamma(s, K, T, r, sigma) for s in S_vals]
@@ -115,3 +100,37 @@ ax2.set_xlabel("Spot Price")
 ax2.set_ylabel("Sensitivity")
 ax2.legend()
 st.pyplot(fig2)
+
+# Greeks vs Volatility
+st.subheader("Greek Sensitivities vs Volatility")
+sigmas = np.linspace(0.1, 0.6, 100)
+deltas_v = [delta(S, K, T, r, s, option_type) for s in sigmas]
+gammas_v = [gamma(S, K, T, r, s) for s in sigmas]
+vegas_v = [vega(S, K, T, r, s) for s in sigmas]
+
+fig3, ax3 = plt.subplots()
+ax3.plot(sigmas, deltas_v, label='Delta')
+ax3.plot(sigmas, gammas_v, label='Gamma')
+ax3.plot(sigmas, vegas_v, label='Vega')
+ax3.set_title("Greeks vs Volatility")
+ax3.set_xlabel("Volatility (σ)")
+ax3.set_ylabel("Sensitivity")
+ax3.legend()
+st.pyplot(fig3)
+
+# Greeks vs Time to Maturity
+st.subheader("Greek Sensitivities vs Time to Maturity")
+T_vals = np.linspace(0.01, 2.0, 100)
+deltas_t = [delta(S, K, t, r, sigma, option_type) for t in T_vals]
+gammas_t = [gamma(S, K, t, r, sigma) for t in T_vals]
+vegas_t = [vega(S, K, t, r, sigma) for t in T_vals]
+
+fig4, ax4 = plt.subplots()
+ax4.plot(T_vals, deltas_t, label='Delta')
+ax4.plot(T_vals, gammas_t, label='Gamma')
+ax4.plot(T_vals, vegas_t, label='Vega')
+ax4.set_title("Greeks vs Time to Maturity")
+ax4.set_xlabel("Time to Maturity (T)")
+ax4.set_ylabel("Sensitivity")
+ax4.legend()
+st.pyplot(fig4)
