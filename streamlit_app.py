@@ -54,6 +54,40 @@ st.markdown("""
 - \( N(\cdot) \): Cumulative distribution function of the standard normal distribution
 """)
 
+### 📈 The Greeks (Sensitivities)
+
+**Delta** measures the rate of change of option price with respect to the underlying asset:
+\[
+\Delta = N(d_1) \quad \text{(Call)}, \quad \Delta = -N(-d_1) \quad \text{(Put)}
+\]
+
+**Gamma** measures the rate of change of delta with respect to the underlying asset:
+\[
+\Gamma = \frac{N'(d_1)}{S \sigma \sqrt{T}}
+\]
+
+**Vega** measures the sensitivity of option price to volatility:
+\[
+\text{Vega} = S N'(d_1) \sqrt{T}
+\]
+
+**Theta** measures the rate of change of option price with respect to time:
+\[
+\Theta = -\frac{S N'(d_1) \sigma}{2 \sqrt{T}} - r K e^{-rT} N(d_2) \quad \text{(Call)}
+\]
+\[
+\Theta = -\frac{S N'(d_1) \sigma}{2 \sqrt{T}} + r K e^{-rT} N(-d_2) \quad \text{(Put)}
+\]
+
+**Rho** measures the sensitivity of option price to the interest rate:
+\[
+\text{Rho} = K T e^{-rT} N(d_2) \quad \text{(Call)}, \quad \text{Rho} = -K T e^{-rT} N(-d_2) \quad \text{(Put)}
+\]
+
+These are essential for risk management and understanding how option values change with market conditions.
+""")
+
+
 with st.sidebar:
     st.markdown("Configure your option parameters below")
 
