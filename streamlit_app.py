@@ -39,7 +39,7 @@ st.latex(r"C = S N(d_1) - K e^{-rT} N(d_2)")
 st.latex(r"P = K e^{-rT} N(-d_2) - S N(-d_1)")
 
 st.markdown("Where:")
-st.latex(r"d_1 = rac{\ln(rac{S}{K}) + (r + rac{\sigma^2}{2})T}{\sigma\sqrt{T}}, \quad d_2 = d_1 - \sigma\sqrt{T}")
+st.latex(r"d_1 = \frac{\ln\left(\frac{S}{K}\right) + \left(r + \frac{\sigma^2}{2}\right)T}{\sigma\sqrt{T}}, \quad d_2 = d_1 - \sigma\sqrt{T}")
 
 st.markdown("""
 - \( S \): Current stock price  
