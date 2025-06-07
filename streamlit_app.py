@@ -52,7 +52,6 @@ st.markdown("""
 - \( r \): Risk-free interest rate  
 - \( \sigma \): Volatility of the underlying asset  
 - \( N(\cdot) \): Cumulative distribution function of the standard normal distribution
-""")
 
 ### 📈 The Greeks (Sensitivities)
 
