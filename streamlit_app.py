@@ -54,8 +54,6 @@ st.markdown("""
 - \( N(\cdot) \): Cumulative distribution function of the standard normal distribution
 """)
 
-
-
 with st.sidebar:
     st.markdown("Configure your option parameters below")
 
