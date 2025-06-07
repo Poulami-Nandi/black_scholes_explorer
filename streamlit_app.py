@@ -31,19 +31,15 @@ with col1:
 with col2:
     st.image("https://github.com/Poulami-Nandi/IV_surface_analyzer/raw/main/images/own/own_image.jpg", caption="Dr. Poulami Nandi", use_container_width=True)
 
+# Explanation Section
 st.subheader("📘 Mathematical Formulation")
 
-st.markdown("The **Black-Scholes formula** for pricing a European call option is:")
-
-st.latex(r'''
-C = S N(d_1) - K e^{-rT} N(d_2)
-''')
+st.markdown("The **Black-Scholes formula** for pricing a European option is:")
+st.latex(r"C = S N(d_1) - K e^{-rT} N(d_2)")
+st.latex(r"P = K e^{-rT} N(-d_2) - S N(-d_1)")
 
 st.markdown("Where:")
-
-st.latex(r'''
-d_1 = \frac{\ln(\frac{S}{K}) + (r + \frac{\sigma^2}{2})T}{\sigma \sqrt{T}}, \quad d_2 = d_1 - \sigma \sqrt{T}
-''')
+st.latex(r"d_1 = rac{\ln(rac{S}{K}) + (r + rac{\sigma^2}{2})T}{\sigma\sqrt{T}}, \quad d_2 = d_1 - \sigma\sqrt{T}")
 
 st.markdown("""
 - \( S \): Current stock price  
@@ -52,40 +48,28 @@ st.markdown("""
 - \( r \): Risk-free interest rate  
 - \( \sigma \): Volatility of the underlying asset  
 - \( N(\cdot) \): Cumulative distribution function of the standard normal distribution
-
-### 📈 The Greeks (Sensitivities)
-
-**Delta** measures the rate of change of option price with respect to the underlying asset:
-\[
-\Delta = N(d_1) \quad \text{(Call)}, \quad \Delta = -N(-d_1) \quad \text{(Put)}
-\]
-
-**Gamma** measures the rate of change of delta with respect to the underlying asset:
-\[
-\Gamma = \frac{N'(d_1)}{S \sigma \sqrt{T}}
-\]
-
-**Vega** measures the sensitivity of option price to volatility:
-\[
-\text{Vega} = S N'(d_1) \sqrt{T}
-\]
-
-**Theta** measures the rate of change of option price with respect to time:
-\[
-\Theta = -\frac{S N'(d_1) \sigma}{2 \sqrt{T}} - r K e^{-rT} N(d_2) \quad \text{(Call)}
-\]
-\[
-\Theta = -\frac{S N'(d_1) \sigma}{2 \sqrt{T}} + r K e^{-rT} N(-d_2) \quad \text{(Put)}
-\]
-
-**Rho** measures the sensitivity of option price to the interest rate:
-\[
-\text{Rho} = K T e^{-rT} N(d_2) \quad \text{(Call)}, \quad \text{Rho} = -K T e^{-rT} N(-d_2) \quad \text{(Put)}
-\]
-
-These are essential for risk management and understanding how option values change with market conditions.
 """)
 
+st.subheader("📈 The Greeks (Sensitivities)")
+
+st.markdown("**Delta** – sensitivity to underlying asset:")
+st.latex(r"\Delta = N(d_1) \quad \text{(Call)}, \quad \Delta = -N(-d_1) \quad \text{(Put)}")
+
+st.markdown("**Gamma** – rate of change of delta:")
+st.latex(r"\Gamma = \frac{N'(d_1)}{S \sigma \sqrt{T}}")
+
+st.markdown("**Vega** – sensitivity to volatility:")
+st.latex(r"\text{Vega} = S N'(d_1) \sqrt{T}")
+
+st.markdown("**Theta** – sensitivity to time:")
+st.latex(r"\Theta = -\frac{S N'(d_1) \sigma}{2 \sqrt{T}} - r K e^{-rT} N(d_2) \quad \text{(Call)}")
+st.latex(r"\Theta = -\frac{S N'(d_1) \sigma}{2 \sqrt{T}} + r K e^{-rT} N(-d_2) \quad \text{(Put)}")
+
+st.markdown("**Rho** – sensitivity to interest rate:")
+st.latex(r"\text{Rho} = K T e^{-rT} N(d_2) \quad \text{(Call)}")
+st.latex(r"\text{Rho} = -K T e^{-rT} N(-d_2) \quad \text{(Put)}")
+
+st.markdown("These are essential for risk management and understanding how option values change with market conditions.")
 
 with st.sidebar:
     st.markdown("Configure your option parameters below")
