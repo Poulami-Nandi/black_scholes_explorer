@@ -31,45 +31,29 @@ with col1:
 with col2:
     st.image("https://github.com/Poulami-Nandi/IV_surface_analyzer/raw/main/images/own/own_image.jpg", caption="Dr. Poulami Nandi", use_container_width=True)
 
-# Explanation Section
-st.markdown("""
-### 📘 Mathematical Formulation
+st.subheader("📘 Mathematical Formulation")
 
-The **Black-Scholes formula** for pricing a European option is:
+st.markdown("The **Black-Scholes formula** for pricing a European call option is:")
 
-**Call Option Price:**
-\[
+st.latex(r'''
 C = S N(d_1) - K e^{-rT} N(d_2)
-\]
+''')
 
-**Put Option Price:**
-\[
-P = K e^{-rT} N(-d_2) - S N(-d_1)
-\]
+st.markdown("Where:")
 
-Where:
-\[
-d_1 = \frac{\ln(\frac{S}{K}) + (r + \frac{\sigma^2}{2})T}{\sigma\sqrt{T}}, \quad d_2 = d_1 - \sigma\sqrt{T}
-\]
+st.latex(r'''
+d_1 = \frac{\ln(\frac{S}{K}) + (r + \frac{\sigma^2}{2})T}{\sigma \sqrt{T}}, \quad d_2 = d_1 - \sigma \sqrt{T}
+''')
 
-Here,
+st.markdown("""
 - \( S \): Current stock price  
 - \( K \): Strike price  
 - \( T \): Time to maturity (in years)  
 - \( r \): Risk-free interest rate  
 - \( \sigma \): Volatility of the underlying asset  
 - \( N(\cdot) \): Cumulative distribution function of the standard normal distribution
-
-The **Greeks** are the partial derivatives of the option price with respect to different variables:
-
-- **Delta**: Sensitivity to the underlying price
-- **Gamma**: Sensitivity of Delta to the underlying price
-- **Vega**: Sensitivity to volatility
-- **Theta**: Sensitivity to time (decay)
-- **Rho**: Sensitivity to interest rate
-
-These are essential for risk management and understanding how option values change with market conditions.
 """)
+
 
 
 with st.sidebar:
