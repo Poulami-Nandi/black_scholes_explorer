@@ -34,7 +34,7 @@ with col2:
 # Explanation Section
 st.subheader("📘 Mathematical Formulation")
 
-st.markdown("The **Black-Scholes formula** for pricing a European option is:")
+st.markdown("The **Black-Scholes formula** for pricing a option is:")
 st.latex(r"C = S N(d_1) - K e^{-rT} N(d_2)")
 st.latex(r"P = K e^{-rT} N(-d_2) - S N(-d_1)")
 
